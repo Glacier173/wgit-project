@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -17,12 +18,13 @@ public class Commit
     private String shaOfTree;
     public Commit(String summary, String author, String optionalParent) throws IOException
     {
-        createTree();
-        File f = new File("objects/" + "Commit");
-        FileWriter fw = new FileWriter(f);
         this.summary = summary;
         this.author = author;
         this.optionalParent = optionalParent;
+        shaOfTree = "";
+        createTree();
+        File f = new File("objects/" + "Commit");
+        FileWriter fw = new FileWriter(f);
         fw.write(shaOfTree + "\n");
         if (optionalParent.equals(""))
         {
@@ -44,10 +46,13 @@ public class Commit
         tree.toFile();
         shaOfTree = tree.returnHash();
     }
-    public Calendar getDate()
+    public String getDate()
     {
         Calendar now = GregorianCalendar.getInstance();
-        return now;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        String formattedDate = dateFormat.format(now.getTime());
+        return formattedDate;
     }
     public static String hashString(String sToBeHashed) {
         try {

@@ -56,7 +56,7 @@ public class tree{
             }
         }
         sha1 = Blob.hashString(s.toString());
-        String fileName = "./objects/" + sha1;
+        String fileName = "objects/" + sha1;
         try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
             for (String entry : map.values()) {
                 writer.println(entry);
